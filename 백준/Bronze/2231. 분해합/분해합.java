@@ -5,10 +5,13 @@ public class Main {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        int N = Integer.parseInt(br.readLine());
+        String str_N = br.readLine();
+
+        int N_len = str_N.length();
+        int N = Integer.parseInt(str_N);
         int answer = 0;
 
-        for (int i = 0; i < N; i++) {
+        for (int i = (N - (N_len * 9)); i < N; i++) {
             int num = i;
             int sum = 0;
 
