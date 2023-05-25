@@ -6,6 +6,7 @@ public class Main {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
+        StringBuilder sb = new StringBuilder();
         StringTokenizer st;
 
         int T = Integer.parseInt(br.readLine());
@@ -34,8 +35,9 @@ public class Main {
                     }
                 }
             }
-            bw.write(loc + "\n");
+            sb.append(loc).append("\n");
         }
+        bw.write(sb + "");
 
         br.close();
 
