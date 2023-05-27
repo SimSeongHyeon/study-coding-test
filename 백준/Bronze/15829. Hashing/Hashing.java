@@ -11,7 +11,7 @@ public class Main {
         int pow = 1;
 
         for (int i = 0; i < L; i++) {
-            answer += (long)(str.charAt(i) - 'a' + 1) * pow;
+            answer += (long)(str.charAt(i) - 96) * pow;
             pow = pow * 31 % 1234567891;
         }
 
