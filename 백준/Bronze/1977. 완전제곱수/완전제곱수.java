@@ -14,7 +14,7 @@ public class Main {
              for (int j = 1; j <= i; j++) {
                  if (j * j == i) {
                      ls.add(i);
-                     break;
+                     
                  }
              }
          }
