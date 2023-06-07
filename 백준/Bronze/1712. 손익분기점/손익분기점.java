@@ -17,7 +17,7 @@ public class Main {
         int cnt = 0;
 
         if (benefit <= 0) cnt = -1;
-        else while (A >= benefit * cnt) cnt++;
+        else cnt = A / (C - B) + 1;
 
         bw.write(cnt + "");
 
