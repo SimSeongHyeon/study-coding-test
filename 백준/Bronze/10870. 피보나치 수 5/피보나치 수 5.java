@@ -1,5 +1,4 @@
 import java.io.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Main {
@@ -9,18 +8,19 @@ public class Main {
 
         int n = Integer.parseInt(br.readLine());
 
-        bw.write(Fib(n) + "");
+        ArrayList<Integer> fib = new ArrayList<>();
+
+        for (int i = 0; i < n + 1; i++) {
+            if (i == 0) fib.add(0);
+            else if (i == 1) fib.add(1);
+            else fib.add(fib.get(i - 2) + fib.get(i - 1));
+        }
+
+        bw.write(fib.get(n) + "");
 
         br.close();
 
         bw.flush();
         bw.close();
-    }
-
-    public static int Fib (int n) {
-        if (n == 0) return 0;
-        else if (n == 1) return 1;
-
-        return Fib(n - 1) + Fib(n - 2);
     }
 }
