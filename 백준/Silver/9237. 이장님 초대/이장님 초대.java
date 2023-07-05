@@ -1,6 +1,5 @@
 import java.io.*;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -9,7 +8,7 @@ public class Main {
 
         int N = Integer.parseInt(br.readLine());
 
-        Integer[] grow = new Integer[N];
+        int[] grow = new int[N];
 
         int day = 1;
         int visit = 0;
@@ -20,11 +19,13 @@ public class Main {
             grow[i] = Integer.parseInt(st.nextToken());
         }
 
-        Arrays.sort(grow, Collections.reverseOrder());
+        Arrays.sort(grow);
 
-        for (int i = 0; i < N; i++) {
-            visit = Math.max(visit, grow[i] + i);
+        for (int i = N - 1; i >= 0; i--) {
+            grow[i] = grow[i] + day + 1;
+            visit = Math.max(visit, grow[i]);
+            day++;
         }
-        System.out.println(visit + 2);
+        System.out.println(visit);
     }
 }
