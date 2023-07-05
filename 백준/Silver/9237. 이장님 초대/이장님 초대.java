@@ -23,12 +23,8 @@ public class Main {
         Arrays.sort(grow, Collections.reverseOrder());
 
         for (int i = 0; i < N; i++) {
-            grow[i] += day;
-            day++;
+            visit = Math.max(visit, grow[i] + i);
         }
-
-        Arrays.sort(grow, Collections.reverseOrder());
-
-        System.out.println(grow[0] + 1);
+        System.out.println(visit + 2);
     }
 }
