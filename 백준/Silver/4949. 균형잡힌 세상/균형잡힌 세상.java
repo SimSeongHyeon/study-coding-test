@@ -7,6 +7,8 @@ public class Main {
 
         String str;
 
+        StringBuilder sb = new StringBuilder();
+
         while (true) {
             str = br.readLine();
 
@@ -22,7 +24,7 @@ public class Main {
 
                     else if (str.charAt(i) == ')') {
                         if (stack.isEmpty() || stack.peek() != '(') {
-                            System.out.println("no");
+                            sb.append("no").append("\n");
                             break;
                         }
                         else stack.pop();
@@ -30,18 +32,19 @@ public class Main {
 
                     else if (str.charAt(i) == ']') {
                         if (stack.isEmpty() || stack.peek() != '[') {
-                            System.out.println("no");
+                            sb.append("no").append("\n");
                             break;
                         }
                         else stack.pop();
                     }
 
                     if (str.charAt(i) == '.') {
-                        if (stack.isEmpty()) System.out.println("yes");
-                        else System.out.println("no");
+                        if (stack.isEmpty()) sb.append("yes").append("\n");
+                        else sb.append("no").append("\n");
                     }
                 }
             }
         }
+        System.out.println(sb);
     }
 }
