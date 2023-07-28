@@ -6,30 +6,25 @@ public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        String N = br.readLine();
+        System.out.println(arithmetic_sequence(Integer.parseInt(br.readLine())));
+    }
 
-        int X = Integer.parseInt(N);
+    static int arithmetic_sequence (int N) {
+        int cnt = 99;
 
-        int cnt = 0;
+        if (N < 100) return N;
 
-        if (X < 100) {
-            for (int i = 0; i < X; i++) cnt++;
-        }
+        else {
+            for (int i = 100; i <= N; i++) {
+                int a = i / 100;
+                int b = (i % 100) / 10;
+                int c = i % 10;
 
-        else if (X < 1000) {
-            cnt = 99;
-
-            for (int i = 100; i <= X; i++) {
-                String iStr = String.valueOf(i);
-
-                int gap = (int) iStr.charAt(1) - (int) iStr.charAt(0);
-
-                if (iStr.charAt(1) + gap == iStr.charAt(2)) cnt++;
+                if (b - a == c - b) cnt++;
             }
         }
 
-        else cnt = 144;
+        return cnt;
 
-        System.out.println(cnt);
     }
 }
