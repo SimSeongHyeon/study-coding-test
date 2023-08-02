@@ -1,67 +1,42 @@
-import java.util.*;
-import java.io.*;
-public class Main{
-    
-    public static void main(String [] args) throws Exception {
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        String str = br.readLine();
+
         StringBuilder sb = new StringBuilder();
 
-        final String input = br.readLine();
-        int polyCount = 0;
-        for(int i=0;i<input.length();i++) {
-            if(input.charAt(i)=='X') {
-                polyCount++;
-            }else {
-                if(polyCount%2 == 1) {
-                    sb = new StringBuilder();
-                    sb.append(-1);
-                    break;
-                }
-                
-                while(polyCount != 0) {
-                    if(polyCount >= 4) {
-                        sb.append("AAAA");
-                        polyCount -= 4;
-                    }else{
-                        sb.append("BB");
-                        polyCount -= 2;
-                    }    
-                }
-                
-                  sb.append(".");
-                                
-            }
-        }
-        if(polyCount > 0) {
-            if(polyCount%2 == 1) {
-                sb = new StringBuilder();
-                sb.append(-1);
-            }else {
-                while(polyCount != 0) {
-                    
-                    if(polyCount >= 4) {
-                        sb.append("AAAA");
-                        polyCount -= 4;
-                    }else {
-                        sb.append("BB");
-                        polyCount -= 2;
-                    }   
-                }
-            }
-            
-           
-        }
-        
-        sb.append("\n"); 
-        
-        bw.write(sb.toString());
-        
-        bw.flush();
-        br.close();
-        bw.close();
-        
-    }
+        String[] X = str.split("\\.", -1);
 
-    
+        for (int i = 0; i < X.length; i++) {
+            if (X[i].length() % 2 == 1) {
+                System.out.println("-1");
+                return;
+            }
+
+            else {
+                int lengthX = X[i].length();
+
+                while (lengthX >= 4) {
+                    sb.append("AAAA");
+                    lengthX -= 4;
+                }
+
+                while (lengthX >= 2) {
+                    sb.append("BB");
+                    lengthX -= 2;
+                }
+            }
+
+            if (i < X.length - 1) {
+                sb.append(".");
+            }
+        }
+
+        System.out.println(sb);
+    }
 }
