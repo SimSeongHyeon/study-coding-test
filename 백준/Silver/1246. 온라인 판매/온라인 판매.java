@@ -19,8 +19,6 @@ public class Main {
             cost[i] = Integer.parseInt(br.readLine());
         }
 
-        int benefit = 0;
-
         Arrays.sort(cost);
 
         int[] sum = new int[M];
@@ -29,15 +27,16 @@ public class Main {
                 sum[i] = cost[i] * Math.min(N, M - i);
         }
 
-        int price = 0;
+        int benefit = 0;
+        int idx = 0;
 
         for (int i = 0; i < M; i++) {
             if (sum[i] > benefit) {
                 benefit = sum[i];
-                price = i;
+                idx = i;
             }
         }
 
-        System.out.println(cost[price] + " " + benefit);
+        System.out.println(cost[idx] + " " + benefit);
     }
 }
