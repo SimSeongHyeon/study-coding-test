@@ -26,7 +26,7 @@ public class Main {
         for (int i = 1; i < str.length(); i++) {
             if (strings.size() > 0 && strings.peek() == str.charAt(i)) strings.pop();
 
-            else if (strings.empty() || (strings.peek() != str.charAt(i))) strings.push(str.charAt(i));
+            else strings.push(str.charAt(i));
         }
 
         if (strings.empty()) return 1;
