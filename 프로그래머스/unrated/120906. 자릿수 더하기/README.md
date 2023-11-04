@@ -1,10 +1,10 @@
 # [level unrated] 자릿수 더하기 - 120906 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/120906?language=python3) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/120906?language=java) 
 
 ### 성능 요약
 
-메모리: 10.3 MB, 시간: 0.00 ms
+메모리: 75.8 MB, 시간: 0.02 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2023년 11월 6일 17:22:14
+2023년 11월 6일 17:22:47
 
 ### 문제 설명
 
