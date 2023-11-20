@@ -1,20 +1,16 @@
+import java.util.*;
+
 class Solution {
     public int solution(int[] nums) {
         int answer = 0;
 
-        boolean[] type = new boolean[200001];
+        HashSet<Integer> set = new HashSet<>();
         
         for (int i : nums) {
-            type[i] = true;
+            set.add(i);
         }
         
-        int cnt = 0; 
-        
-        for (int i = 0; i < type.length; i++) {
-            if(type[i]) cnt++;    
-        }
-        
-        answer = Math.min(cnt, nums.length / 2);
+        answer = Math.min(set.size(), nums.length / 2);
         
         return answer;
     }
