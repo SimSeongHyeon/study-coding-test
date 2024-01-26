@@ -25,8 +25,8 @@ public class Main {
             int nowY = nowSpot[1];
 
             for (int i = 0; i < 4; i++) {
-                int nextX = nowX + dr[i];
-                int nextY = nowY + dc[i];
+                int nextX = nowX + dc[i];
+                int nextY = nowY + dr[i];
 
                 if (nextX >= 0 && nextY >= 0 && nextX < N && nextY < M && !visited[nextX][nextY] && maze[nextX][nextY] > 0) {
                     queue.add(new int[]{nextX, nextY});
