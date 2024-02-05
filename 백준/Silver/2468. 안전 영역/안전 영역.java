@@ -3,70 +3,70 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-//DFS
 public class Main {
 
-	static int N, result=1;
-	static int[][] map;
-	static boolean[][] visited;
-	static int[] dr = {1,-1,0,0};
-	static int[] dc = {0,0,1,-1};
-	
-	public static void main(String[] args) throws IOException{
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st = null;
-		
-		N = Integer.parseInt(br.readLine());
-		map = new int[N][N];
-		visited = new boolean[N][N];
-		
-		int max = 0; //지형의 최고 높이
-		for (int i = 0; i < N; i++) {
-			st = new StringTokenizer(br.readLine());
-			for (int j = 0; j < N; j++) {
-				map[i][j] = Integer.parseInt(st.nextToken());
-				if(map[i][j]>max) max = map[i][j];
-			}
-		}//input
-		
-		for (int h = 1; h <= max; h++) {
-			init(); //visited배열 초기화
+    static int N;
+    static int[][] areaInfo;
+    static boolean[][] visited;
+    static int[] dr = {0, 0, -1, 1};
+    static int[] dc = {1, -1, 0, 0};
 
-			int cnt = 0;		
-			for (int i = 0; i < N; i++) {
-				for (int j = 0; j < N; j++) {
-					if(map[i][j]>h && !visited[i][j]) {//안전지대 발견
-						cnt++;
-						dfs(i,j,h);
-					}
-				}
-			}
-			result = Math.max(cnt, result);
-		}
-		System.out.println(result);
-	}//end of main
-	
-	private static void init() {
-		for (int i = 0; i < N; i++) {
-			for (int j = 0; j < N; j++) {
-				visited[i][j]=false;
-			}
-		}
-	}//end of init
-	
-	private static void dfs(int r, int c, int h) {
-		visited[r][c]=true;
-		
-		for (int i = 0; i < 4; i++) {
-			int nr = r+dr[i];
-			int nc = c+dc[i];
-				
-			// exception
-			if(nr<0||nc<0||nr>=N||nc>=N||
-					//물에 잠기거나 이미 확인한 곳이면 체크하지 않는다
-					map[nr][nc]<=h||visited[nr][nc]) continue;
+    static void dfs(int x, int y, int h) {
+        visited[x][y] = true;
 
-			dfs(nr,nc,h);
-		}
-	}
+        for (int i = 0; i < 4; i++) {
+            int nx = x + dr[i];
+            int ny = y + dc[i];
+
+            if (nx >= 0 && ny >= 0 && nx < N && ny < N && !visited[nx][ny] && areaInfo[nx][ny] > h) {
+                dfs(nx, ny, h);
+            }
+        }
+    }
+
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        N = Integer.parseInt(br.readLine());
+
+        areaInfo = new int[N][N];
+
+        StringTokenizer st;
+
+        int maxHeight = 0;
+
+        for (int i = 0; i < N; i++) {
+            st = new StringTokenizer(br.readLine());
+
+            for (int j = 0; j < N; j++) {
+                areaInfo[i][j] = Integer.parseInt(st.nextToken());
+
+                maxHeight = Math.max(areaInfo[i][j], maxHeight);
+            }
+        }
+
+        int max = 1;
+
+        for (int h = 1; h <= maxHeight; h++) {
+            visited = new boolean[N][N];
+
+            int count = 0;
+
+            for(int i = 0; i < N; i++) {
+                for (int j = 0; j < N; j++) {
+                    if (!visited[i][j] && areaInfo[i][j] > h) {
+                        dfs(i, j, h);
+
+                        count++;
+                    }
+                }
+            }
+
+            max = Math.max(max, count);
+        }
+
+        System.out.println(max);
+
+    }
 }
