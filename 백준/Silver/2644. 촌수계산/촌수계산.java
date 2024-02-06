@@ -75,7 +75,7 @@ public class Main {
 
         distance = new int[n + 1];
 
-        bfs(startPerson, endPerson);
+        dfs(startPerson, endPerson);
 
         System.out.println(distance[endPerson] == 0 ? -1 : distance[endPerson]);
     }
