@@ -48,7 +48,7 @@ public class Main {
             if (nx >= 0 && ny >= 0 && nx < N && ny < M && !visited[nx][ny] && campus[nx][ny] != 'X') {
                 visited[nx][ny] = true;
 
-                dfs(nx, ny);
+                bfs(nx, ny);
 
                 if (campus[nx][ny] == 'P') {
                     count++;
