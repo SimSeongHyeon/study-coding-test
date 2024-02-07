@@ -10,47 +10,47 @@ public class Main {
     static int[] board, count;
     static boolean[] visited;
 
-    static void bfs(int x) {
+    static void bfs() {
+        visited[1] = true;
+
         Queue<Integer> queue = new LinkedList<>();
 
-        queue.add(x);
-
-        visited[x] = true;
+        queue.add(1);
 
         while (!queue.isEmpty()) {
             int current = queue.poll();
 
             if (current == 100) {
+                System.out.println(count[current]);
+
                 return;
             }
 
-            for (int i = 1; i <= 6; i++) {
+            for (int i = 1; i < 7; i++) {
                 int next = current + i;
 
-                if (next > 100 || visited[next]) {
-                    continue;
-                }
+                if (next <= 100 && !visited[next]) {
+                    if (board[next] != 0 && !visited[board[next]]) {
+                        count[board[next]] = count[current] + 1;
 
-                visited[next] = true;
+                        queue.add(board[next]);
 
-                if (board[next] != 0 && !visited[board[next]]) {
-                    count[board[next]] = count[current] + 1;
+                        visited[board[next]] = true;
 
-                    queue.add(board[next]);
+                    } else if (!visited[board[next]]){
+                        count[next] = count[current] + 1;
 
-                    visited[board[next]] = true;
-                    
-                } else if (!visited[board[next]]) {
-                    count[next] = count[current] + 1;
+                        queue.add(next);
 
-                    queue.add(next);
+                    }
+
+                    visited[next] = true;
                 }
             }
         }
     }
 
     public static void main(String[] args) throws IOException {
-
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         StringTokenizer st;
@@ -83,9 +83,7 @@ public class Main {
         count = new int[101];
         visited = new boolean[101];
 
-        bfs(1);
+        bfs();
 
-        System.out.println(count[100]);
     }
-
 }
