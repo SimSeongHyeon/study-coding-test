@@ -50,15 +50,24 @@ public class Main {
                 continue;
             }
 
-            queue.add(new Calculator(D(calculator.num), calculator.operand + "D"));
-
-            queue.add(new Calculator(S(calculator.num), calculator.operand + "S"));
-
-            queue.add(new Calculator(L(calculator.num), calculator.operand + "L"));
-
-            queue.add(new Calculator(R(calculator.num), calculator.operand + "R"));
-
             visited[calculator.num] = true;
+
+            if (!visited[D(calculator.num)]) {
+                queue.add(new Calculator(D(calculator.num), calculator.operand + "D"));
+            }
+
+            if (!visited[S(calculator.num)]) {
+                queue.add(new Calculator(S(calculator.num), calculator.operand + "S"));
+            }
+
+            if (!visited[L(calculator.num)]) {
+                queue.add(new Calculator(L(calculator.num), calculator.operand + "L"));
+            }
+
+            if (!visited[R(calculator.num)]) {
+                queue.add(new Calculator(R(calculator.num), calculator.operand + "R"));
+            }
+
         }
     }
 
