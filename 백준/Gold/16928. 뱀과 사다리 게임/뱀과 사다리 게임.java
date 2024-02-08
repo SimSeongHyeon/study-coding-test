@@ -7,50 +7,11 @@ import java.util.StringTokenizer;
 
 public class Main {
 
-    static int[] board, count;
+    static int[] board;
     static boolean[] visited;
 
-    static void bfs() {
-        visited[1] = true;
-
-        Queue<Integer> queue = new LinkedList<>();
-
-        queue.add(1);
-
-        while (!queue.isEmpty()) {
-            int current = queue.poll();
-
-            if (current == 100) {
-                System.out.println(count[current]);
-
-                return;
-            }
-
-            for (int i = 1; i < 7; i++) {
-                int next = current + i;
-
-                if (next <= 100 && !visited[next]) {
-                    if (board[next] != 0 && !visited[board[next]]) {
-                        count[board[next]] = count[current] + 1;
-
-                        queue.add(board[next]);
-
-                        visited[board[next]] = true;
-
-                    } else if (!visited[board[next]]){
-                        count[next] = count[current] + 1;
-
-                        queue.add(next);
-
-                    }
-
-                    visited[next] = true;
-                }
-            }
-        }
-    }
-
     public static void main(String[] args) throws IOException {
+
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         StringTokenizer st;
@@ -80,10 +41,61 @@ public class Main {
             board[u] = v;
         }
 
-        count = new int[101];
         visited = new boolean[101];
 
         bfs();
+    }
 
+    static void bfs() {
+        visited[1] = true;
+
+        Queue<Status> queue = new LinkedList<>();
+
+        queue.add(new Status(1, 0));
+
+        while (!queue.isEmpty()) {
+            Status current = queue.poll();
+
+            if (current.currentNum == 100) {
+                System.out.println(current.count);
+
+                return;
+            }
+
+            for (int i = 0; i < 7; i++) {
+                int next = current.currentNum + i;
+
+                if (next > 100) {
+                    break;
+                }
+
+                if (visited[next]) {
+                    continue;
+                }
+
+                if (board[next] == 0) {
+                    queue.add(new Status(next, current.count + 1));
+
+                    visited[next] = true;
+                } else {
+                    if (!visited[board[next]]) {
+                        queue.add(new Status(board[next], current.count + 1));
+
+                        visited[board[next]] = true;
+                    }
+                }
+            }
+        }
+
+    }
+
+    static class Status {
+        int currentNum;
+        int count;
+
+        public Status(int currentNum, int count) {
+            this.currentNum = currentNum;
+            this.count = count;
+        }
     }
 }
