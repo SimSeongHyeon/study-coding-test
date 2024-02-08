@@ -59,7 +59,6 @@ public class Main {
             queue.add(new Calculator(R(calculator.num), calculator.operand + "R"));
 
             visited[calculator.num] = true;
-
         }
     }
 
