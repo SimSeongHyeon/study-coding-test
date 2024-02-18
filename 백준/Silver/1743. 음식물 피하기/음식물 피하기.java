@@ -39,24 +39,6 @@ public class Main {
         int dfsMaxArea = 0;
         int bfsMaxArea = 0;
 
-        visited = new boolean[N][M];
-
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < M; j++) {
-                if (!visited[i][j] && aisle[i][j] == 1) {
-                    area = 0;
-
-                    dfs(i, j);
-
-                    dfsMaxArea = Math.max(area, dfsMaxArea);
-                }
-            }
-        }
-
-        System.out.println(dfsMaxArea);
-
-//        area = 0;
-//
 //        visited = new boolean[N][M];
 //
 //        for (int i = 0; i < N; i++) {
@@ -64,14 +46,32 @@ public class Main {
 //                if (!visited[i][j] && aisle[i][j] == 1) {
 //                    area = 0;
 //
-//                    bfs(i, j);
+//                    dfs(i, j);
 //
-//                    bfsMaxArea = Math.max(area, bfsMaxArea);
+//                    dfsMaxArea = Math.max(area, dfsMaxArea);
 //                }
 //            }
 //        }
 //
-//        System.out.println("BFS : " + bfsMaxArea);
+//        System.out.println("DFS : " + dfsMaxArea);
+
+        area = 0;
+
+        visited = new boolean[N][M];
+
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < M; j++) {
+                if (!visited[i][j] && aisle[i][j] == 1) {
+                    area = 0;
+
+                    bfs(i, j);
+
+                    bfsMaxArea = Math.max(area, bfsMaxArea);
+                }
+            }
+        }
+
+        System.out.println(bfsMaxArea);
     }
 
     static void dfs(int x, int y) {
@@ -102,6 +102,8 @@ public class Main {
 
         queue.add(new LocationOfFood(x, y));
 
+        visited[x][y] = true;
+
         while (!queue.isEmpty()) {
             LocationOfFood current = queue.poll();
 
@@ -123,6 +125,8 @@ public class Main {
 
                 if (aisle[nx][ny] == 1) {
                     queue.add(new LocationOfFood(nx, ny));
+
+                    visited[nx][ny] = true;
                 }
             }
         }
