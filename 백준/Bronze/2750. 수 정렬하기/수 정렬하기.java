@@ -19,8 +19,12 @@ public class Main {
 
         Arrays.sort(nums);
 
+        StringBuilder sb = new StringBuilder();
+
         for (int i : nums) {
-            System.out.println(i);
+            sb.append(i).append("\n");
         }
+
+        System.out.println(sb);
     }
 }
