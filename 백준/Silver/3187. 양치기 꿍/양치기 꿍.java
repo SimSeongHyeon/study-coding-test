@@ -58,7 +58,8 @@ public class Main {
                     sumOfWolves = 0;
 
                     sumOfSheep = 0;
-                    dfs(i, j);
+
+                    bfs(i, j);
 
                     if (sumOfSheep > sumOfWolves) {
                         survivedSheep += sumOfSheep;
@@ -108,6 +109,8 @@ public class Main {
         Queue<Pasture> queue = new LinkedList<>();
 
         queue.add(new Pasture(x, y));
+
+        visited[x][y] = true;
 
         while (!queue.isEmpty()) {
             Pasture current = queue.poll();
