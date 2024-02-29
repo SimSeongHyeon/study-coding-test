@@ -15,7 +15,7 @@ public class Main {
         StringBuilder sb = new StringBuilder();
 
         while (T-- > 0) {
-            long N = Long.parseLong(br.readLine());
+            int N = Integer.parseInt(br.readLine());
 
             String[] mbti = new String[(int) N];
 
