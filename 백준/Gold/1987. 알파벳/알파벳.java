@@ -41,6 +41,10 @@ public class Main {
 
         maxPath = Math.max(maxPath, count);
 
+        if (maxPath == 26) {
+            return;
+        }
+
         for (int i = 0; i < 4; i++) {
             int nextR = r + dr[i];
             int nextC = c + dc[i];
