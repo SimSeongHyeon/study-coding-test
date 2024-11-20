@@ -11,35 +11,27 @@ public class Main {
         int M = Integer.parseInt(bufferedReader.readLine());
         String S = bufferedReader.readLine();
 
-        String P = getP(N);
-
-        int count = getCount(S, P);
-
-        System.out.println(count);
+        System.out.println(getPatternCount(S, N));
     }
 
-    static String getP(int N) {
-        StringBuilder P = new StringBuilder();
-
-        for (int i = 0; i < N; i++) {
-            P.append("I").append("O");
-        }
-
-        P.append("I");
-
-        return String.valueOf(P);
-    }
-
-    static int getCount(String string, String P) {
+    static int getPatternCount(String S, int N) {
         int count = 0;
+        int patternLength = 0; // 현재 IOI 반복 횟수 저장
 
-        for (int i = 0; i <= string.length() - P.length(); i++) {
-            if (string.startsWith(P, i)) {
-                count++;
+        for (int i = 1; i < S.length() - 1; i++) {
+            // IOI 패턴 확인
+            if (S.charAt(i - 1) == 'I' && S.charAt(i) == 'O' && S.charAt(i + 1) == 'I') {
+                patternLength++; // IOI 발견 시 길이 증가
+                if (patternLength == N) {
+                    count++; // PN 발견 시 카운트 증가
+                    patternLength--; // 겹치는 패턴을 위해 길이 감소
+                }
+                i++; // IOI는 3칸씩 처리되므로 한 칸 추가 이동
+            } else {
+                patternLength = 0; // 패턴 깨지면 초기화
             }
         }
 
         return count;
     }
-
 }
