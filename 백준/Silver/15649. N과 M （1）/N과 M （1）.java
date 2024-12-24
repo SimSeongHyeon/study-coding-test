@@ -4,10 +4,11 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class Main{
-    
+
     static int[] numbers;
     static boolean[] isVisited;
-    
+    static StringBuilder stringBuilder = new StringBuilder();
+
     public static void main(String[] args) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
@@ -17,18 +18,20 @@ public class Main{
         int M = Integer.parseInt(stringTokenizer.nextToken());
 
         getCombination(N, M);
+
+        System.out.println(stringBuilder.toString().trim());
     }
 
     static void getCombination(int N, int M) {
         numbers = new int[M];
         isVisited = new boolean[N + 1];
 
-        backtracking(N, M, numbers, isVisited, 0);
+        backtracking(N, M, 0);
     }
 
-    static void backtracking(int N, int M, int[] numbers, boolean[] isVisited, int depth) {
+    static void backtracking(int N, int M, int depth) {
         if (depth == M) {
-            printCombination(numbers);
+            appendStringBuilder(numbers);
 
             return;
         }
@@ -39,7 +42,7 @@ public class Main{
 
                 numbers[depth] = i;
 
-                backtracking(N, M, numbers, isVisited, depth + 1);
+                backtracking(N, M, depth + 1);
 
                 isVisited[i] = false;
             }
@@ -47,14 +50,12 @@ public class Main{
 
     }
 
-    static void printCombination(int[] numbers) {
-        StringBuilder stringBuilder = new StringBuilder();
-
+    static void appendStringBuilder(int[] numbers) {
         for (int number : numbers) {
             stringBuilder.append(number).append(" ");
         }
 
-        System.out.println(stringBuilder.toString().trim());
+        stringBuilder.append("\n");
     }
 
 }
