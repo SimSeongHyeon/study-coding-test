@@ -1,62 +1,71 @@
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class Main {
 
-    public static boolean[][] arr;
-    public static int min = 64;
+    static int N, M;
+    static char[][] board, chessBoard;
 
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        init();
 
-        StringTokenizer st = new StringTokenizer(br.readLine());
+        int count = Integer.MAX_VALUE;
 
-        int N = Integer.parseInt(st.nextToken());
-        int M = Integer.parseInt(st.nextToken());
+        for (int i = 0; i < N - 7; i++) {
+            for (int j = 0; j < M - 7; j++) {
+                getChessBoard(i, j);
+                count = Math.min(count, countRepaint());
+            }
+        }
 
-        arr = new boolean[N][M];
+        System.out.println(count);
+    }
+
+    static void init() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
+
+        N = Integer.parseInt(stringTokenizer.nextToken());
+        M = Integer.parseInt(stringTokenizer.nextToken());
+
+        board = new char[N][M];
 
         for (int i = 0; i < N; i++) {
-            String str = br.readLine();
-
+            String row = bufferedReader.readLine();
             for (int j = 0; j < M; j++) {
-                if (str.charAt(j) == 'W') arr[i][j] = true;
-                else arr[i][j] = false;
+                board[i][j] = row.charAt(j);
             }
         }
-
-        int N_row = N - 7;
-        int M_col = M - 7;
-
-        for (int i = 0; i < N_row; i++) {
-            for (int j = 0; j < M_col; j++) {
-                find(i, j);
-            }
-        }
-        System.out.println(min);
     }
 
-    public static void find(int x, int y) {
-        int end_x = x + 8;
-        int end_y = y + 8;
-        int cnt = 0;
+    static void getChessBoard(int x, int y) {
+        chessBoard = new char[8][8];
 
-        boolean TF = arr[x][y];
+        for (int i = 0; i < 8; i++) {
+            System.arraycopy(board[i + x], y, chessBoard[i], 0, 8);
+        }
+    }
 
-        for (int i = x; i < end_x; i++) {
-            for (int j = y; j < end_y; j++) {
-                if (arr[i][j] != TF) {
-                    cnt++;
+    static int countRepaint() {
+        int repaintW = 0;
+        int repaintB = 0;
+
+        char[] patterns = {'W', 'B'};
+
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                char pattern = patterns[(i + j) % 2];
+                if (chessBoard[i][j] != pattern) {
+                    repaintW++;
+                } else {
+                    repaintB++;
                 }
-
-                TF = !TF;
             }
-
-            TF = !TF;
         }
-
-        cnt = Math.min(cnt, 64 - cnt);
-
-        min = Math.min(min, cnt);
+        return Math.min(repaintW, repaintB);
     }
+
 }
