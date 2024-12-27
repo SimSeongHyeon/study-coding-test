@@ -58,10 +58,6 @@ public class Main {
     }
 
     static boolean isValid(int num, int x, int y) {
-        return isValidInSquare(num, x, y) && isValidInRow(num, y) && isValidInCol(num, x);
-    }
-
-    static boolean isValidInSquare(int num, int x, int y) {
         int row = x / 3 * 3;
         int col = y / 3 * 3;
 
@@ -73,20 +69,12 @@ public class Main {
             }
         }
 
-        return true;
-    }
-
-    static boolean isValidInRow(int num, int y) {
         for (int i = 0; i < 9; i++) {
             if (sudoku[i][y] == num) {
                 return false;
             }
         }
 
-        return true;
-    }
-
-    static boolean isValidInCol(int num, int x) {
         for (int i = 0; i < 9; i++) {
             if (sudoku[x][i] == num) {
                 return false;
