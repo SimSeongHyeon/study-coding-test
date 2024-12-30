@@ -56,14 +56,13 @@ public class Main {
 
         isVisited[node] = true;
 
-        for (int i = 0; i < relationship.get(node).size(); i++) {
-            if (!isVisited[relationship.get(node).get(i)]) {
-                findABCDERelationship(relationship.get(node).get(i), depth + 1);
+        for (int adjacentNode : relationship.get(node)) {
+            if (!isVisited[adjacentNode]) {
+                findABCDERelationship(adjacentNode, depth + 1);
 
                 if (isFound) {
                     return;
                 }
-
             }
         }
 
