@@ -5,86 +5,75 @@ import java.io.InputStreamReader;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        int[][] sudoku = new int[9][9];
-
-        sudoku = init();
-
-        solve(sudoku, 0, 0);
+        int[][] sudoku = readSudoku();
+        solveSudoku(sudoku, 0, 0);
     }
 
-    static int[][] init() throws IOException {
+    static int[][] readSudoku() throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-
         int[][] sudoku = new int[9][9];
 
-        for (int row = 0; row < 9; row++) {
+        for (int rowIndex = 0; rowIndex < 9; rowIndex++) {
             String line = bufferedReader.readLine();
-            for (int column = 0; column < 9; column++) {
-                sudoku[row][column] = line.charAt(column) - '0';
+            for (int colIndex = 0; colIndex < 9; colIndex++) {
+                sudoku[rowIndex][colIndex] = line.charAt(colIndex) - '0';
             }
         }
 
         return sudoku;
     }
 
-    static void solve(int[][] sudoku, int row, int column) {
-        if (column == 9) {
-            solve(sudoku, row + 1, 0);
-            return;
+    static boolean solveSudoku(int[][] sudoku, int rowIndex, int colIndex) {
+        // 다음 행으로 이동
+        if (colIndex == 9) {
+            return solveSudoku(sudoku, rowIndex + 1, 0);
         }
 
-        if (row == 9) {
+        // 모든 행을 탐색 완료
+        if (rowIndex == 9) {
             printSudoku(sudoku);
-            System.exit(0);
+            return true; // 성공적으로 해결
         }
 
-        if (sudoku[row][column] == 0) {
+        // 빈 칸인 경우 1부터 9까지 시도
+        if (sudoku[rowIndex][colIndex] == 0) {
             for (int num = 1; num <= 9; num++) {
-                if (isValid(sudoku, row, column, num)) {
-                    sudoku[row][column] = num;
-                    solve(sudoku, row, column + 1);
+                if (isValid(sudoku, rowIndex, colIndex, num)) {
+                    sudoku[rowIndex][colIndex] = num;
+                    if (solveSudoku(sudoku, rowIndex, colIndex + 1)) {
+                        return true; // 해결 완료 시 반환
+                    }
+                    sudoku[rowIndex][colIndex] = 0; // 백트래킹
                 }
             }
-
-            sudoku[row][column] = 0;
-
-            return;
+            return false; // 가능한 숫자가 없으면 실패
         }
 
-        solve(sudoku, row, column + 1);
+        // 빈 칸이 아닌 경우 다음 칸으로 이동
+        return solveSudoku(sudoku, rowIndex, colIndex + 1);
     }
 
-    static boolean isValid(int[][] sudoku, int row, int column, int num) {
-        return isRowValid(sudoku, row, num) && isColumnValid(sudoku, column, num) && isBoxValid(sudoku, row, column, num);
-    }
-
-    static boolean isRowValid(int[][] sudoku, int row, int num) {
-        for (int column = 0; column < 9; column++) {
-            if (sudoku[row][column] == num) {
+    static boolean isValid(int[][] sudoku, int rowIndex, int colIndex, int num) {
+        // 행 검사
+        for (int i = 0; i < 9; i++) {
+            if (sudoku[rowIndex][i] == num) {
                 return false;
             }
         }
 
-        return true;
-    }
-
-    static boolean isColumnValid(int[][] sudoku, int column, int num) {
-        for (int row = 0; row < 9; row++) {
-            if (sudoku[row][column] == num) {
+        // 열 검사
+        for (int i = 0; i < 9; i++) {
+            if (sudoku[i][colIndex] == num) {
                 return false;
             }
         }
 
-        return true;
-    }
-
-    static boolean isBoxValid(int[][] sudoku, int row, int column, int num) {
-        int startRow = row / 3 * 3;
-        int startColumn = column / 3 * 3;
-
-        for (int boxRow = startRow; boxRow < startRow + 3; boxRow++) {
-            for (int boxColumn = startColumn; boxColumn < startColumn + 3; boxColumn++) {
-                if (sudoku[boxRow][boxColumn] == num) {
+        // 3x3 박스 검사
+        int startRow = (rowIndex / 3) * 3;
+        int startCol = (colIndex / 3) * 3;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (sudoku[startRow + i][startCol + j] == num) {
                     return false;
                 }
             }
@@ -95,15 +84,12 @@ public class Main {
 
     static void printSudoku(int[][] sudoku) {
         StringBuilder stringBuilder = new StringBuilder();
-
-        for (int row = 0; row < 9; row++) {
-            for (int column = 0; column < 9; column++) {
-                stringBuilder.append(sudoku[row][column]);
+        for (int rowIndex = 0; rowIndex < 9; rowIndex++) {
+            for (int colIndex = 0; colIndex < 9; colIndex++) {
+                stringBuilder.append(sudoku[rowIndex][colIndex]);
             }
             stringBuilder.append("\n");
         }
-
-        System.out.println(stringBuilder);
+        System.out.print(stringBuilder);
     }
-
 }
